@@ -1,4 +1,5 @@
 QT -= gui
+QT += testlib
 
 CONFIG += c++17 console
 CONFIG -= app_bundle
@@ -9,6 +10,14 @@ CONFIG -= app_bundle
 
 SOURCES += \
         main.cpp \
+        tests/test_buildExpressionTree.cpp \
+        tests/test_fillOperationPatternWithParentheses.cpp \
+        tests/test_getExpressionWithParentheses.cpp \
+        tests/test_getOperation.cpp \
+        tests/test_getTokensByWhitespace.cpp \
+        tests/test_isOperationToken.cpp \
+        tests/test_postfixExpressionToTeX.cpp \
+        tests/test_recognizeValueToken.cpp \
         tests/tests.cpp
 
 # Default rules for deployment.
@@ -21,4 +30,12 @@ HEADERS += \
     expressions.h \
     functions.h \
     operators.h \
+    tests/test_buildExpressionTree.h \
+    tests/test_fillOperationPatternWithParentheses.h \
+    tests/test_getExpressionWithParentheses.h \
+    tests/test_getOperation.h \
+    tests/test_getTokensByWhitespace.h \
+    tests/test_isOperationToken.h \
+    tests/test_postfixExpressionToTeX.h \
+    tests/test_recognizeValueToken.h \
     tests/tests.h
