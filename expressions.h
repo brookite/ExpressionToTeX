@@ -1,5 +1,6 @@
 #pragma once
 #include <QString>
+#include <QList>
 
 enum ValueType {
     NUMERIC, IDENTIFIER
@@ -9,52 +10,44 @@ enum ValueType {
 struct ExpressionTreeNode
 {
 public:
-    ExpressionTreeNode(ExpressionTreeNode* left, ExpressionTreeNode* right)
+    ExpressionTreeNode(QList<ExpressionTreeNode*> children)
     {
-        this->left = left;
-        this->right = right;
+        this->children = children;
     };
 
-    bool hasChildren() {
-        return (left != nullptr) || (right != nullptr);
+    ExpressionTreeNode* getChild(int index) {
+        return children.at(index);
     }
 
-    ExpressionTreeNode* leftNode() {
-        return left;
-    }
-
-    ExpressionTreeNode* rightNode() {
-        return right;
+    virtual int getChildrenCount() {
+        return children.length();
     }
 
     virtual QString toTex() = 0;
 
     virtual ~ExpressionTreeNode() {
-        delete left;
-        delete right;
+        for (int i = 0; i < children.length(); i++) {
+            delete children.at(i);
+        }
     }
 protected:
-    ExpressionTreeNode* left = nullptr;
-    ExpressionTreeNode* right = nullptr;
+    QList<ExpressionTreeNode*> children;
 };
 
 
 struct Operation : public ExpressionTreeNode
 {
-    Operation(ExpressionTreeNode* left, ExpressionTreeNode* right) : ExpressionTreeNode(left, right) {
+    Operation(QList<ExpressionTreeNode*> children) : ExpressionTreeNode(children) {
     }
 
-    bool isUnary() {
-        return left == nullptr;
-    }
-
+    virtual QString getOperationToken() = 0;
     virtual int getPriority() = 0;
 };
 
 
 struct Value : public ExpressionTreeNode {
 public:
-    Value(ValueType type, QString value) : ExpressionTreeNode(nullptr, nullptr) {
+    Value(ValueType type, QString value) : ExpressionTreeNode({}) {
         this->type = type;
         this->value = value;
     }

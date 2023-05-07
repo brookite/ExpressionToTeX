@@ -16,5 +16,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    exceptions.h \
     expressions.h \
+    functions.h \
     operators.h
