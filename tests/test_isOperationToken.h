@@ -1,0 +1,11 @@
+#pragma once
+#include <QTest>
+#include <QObject>
+
+
+class Test_isOperationToken : public QObject
+{
+    Q_OBJECT
+private slots:
+    
+};
