@@ -1,1 +1,559 @@
 #include "test_buildExpressionTree.h"
+#include "../functions.h"
+#include "../operations.cpp"
+#include "../exceptions.h"
+#include "testapi.h"
+
+
+void Test_buildExpressionTree::plusOperation() {
+	QStringList list = { "x", "3", "+" };
+
+	PlusOperation * expectedResult = new PlusOperation(
+		new Value(IDENTIFIER, "x"),
+		new Value(NUMERIC, "3")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+
+void Test_buildExpressionTree::subOperation() {
+	QStringList list = { "x", "3", "-" };
+
+	SubOperation* expectedResult = new SubOperation(
+		new Value(IDENTIFIER, "x"),
+		new Value(NUMERIC, "3")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+
+void Test_buildExpressionTree::mulOperation() {
+	QStringList list = { "x", "3", "*" };
+
+	MulOperation* expectedResult = new MulOperation(
+		new Value(IDENTIFIER, "x"),
+		new Value(NUMERIC, "3")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::divOperation() {
+	QStringList list = { "x", "3", "/" };
+
+	DivOperation* expectedResult = new DivOperation(
+		new Value(IDENTIFIER, "x"),
+		new Value(NUMERIC, "3")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::lessOperation() {
+	QStringList list = { "x", "3", "<" };
+
+	LessOperation* expectedResult = new LessOperation(
+		new Value(IDENTIFIER, "x"),
+		new Value(NUMERIC, "3")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::greaterOperation() {
+	QStringList list = { "x", "3", ">" };
+
+	GreaterOperation* expectedResult = new GreaterOperation(
+		new Value(IDENTIFIER, "x"),
+		new Value(NUMERIC, "3")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::lessOrEqualOperation() {
+	QStringList list = { "x", "3", "<=" };
+
+	LessEqualOperation* expectedResult = new LessEqualOperation(
+		new Value(IDENTIFIER, "x"),
+		new Value(NUMERIC, "3")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::greaterOrEqualOperation() {
+	QStringList list = { "x", "3", ">=" };
+
+	GreaterEqualOperation* expectedResult = new GreaterEqualOperation(
+		new Value(IDENTIFIER, "x"),
+		new Value(NUMERIC, "3")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::notEqualOperation() {
+	QStringList list = { "x", "3", "!=" };
+
+	NotEqualOperation* expectedResult = new NotEqualOperation(
+		new Value(IDENTIFIER, "x"),
+		new Value(NUMERIC, "3")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::logOperation() {
+	QStringList list = { "3", "x", "LOG" };
+
+	LogOperation* expectedResult = new LogOperation(
+		new Value(NUMERIC, "3"),
+		new Value(IDENTIFIER, "x")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::powOperation() {
+	QStringList list = { "x", "3", "^" };
+
+	PowOperation* expectedResult = new PowOperation(
+		new Value(IDENTIFIER, "x"),
+		new Value(NUMERIC, "3")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::subIndexOperation() {
+	QStringList list = { "x", "3", "SUB" };
+
+	SubIndexOperation* expectedResult = new SubIndexOperation(
+		new Value(IDENTIFIER, "x"),
+		new Value(NUMERIC, "3")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::logicalAndOperation() {
+	QStringList list = { "x", "3", "&" };
+
+	LogicalAndOperation* expectedResult = new LogicalAndOperation(
+		new Value(IDENTIFIER, "x"),
+		new Value(NUMERIC, "3")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::logicalOrOperation() {
+	QStringList list = { "x", "3", "|" };
+
+	LogicalOrOperation* expectedResult = new LogicalOrOperation(
+		new Value(IDENTIFIER, "x"),
+		new Value(NUMERIC, "3")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::logicalXorOperation() {
+	QStringList list = { "x", "3", "XOR" };
+
+	LogicalXorOperation* expectedResult = new LogicalXorOperation(
+		new Value(IDENTIFIER, "x"),
+		new Value(NUMERIC, "3")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::allQuantifierOperation() {
+	QStringList list = { "x", "x", "3" ,"<", "FORALL" };
+
+	AllQuantifierOperation* expectedResult = new AllQuantifierOperation(
+		new Value(IDENTIFIER, "x"),
+		new LessOperation(
+			new Value(IDENTIFIER, "x"),
+			new Value(NUMERIC, "3")
+		)
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::existQuantifierOperation() {
+	QStringList list = { "x", "x", "3", ">", "EXISTS" };
+
+	ExistQuantifierOperation* expectedResult = new ExistQuantifierOperation(
+		new Value(IDENTIFIER, "x"),
+		new GreaterOperation(
+			new Value(IDENTIFIER, "x"),
+			new Value(NUMERIC, "3")
+		)
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::modOperation() {
+	QStringList list = { "x", "3", "%" };
+
+	ModOperation* expectedResult = new ModOperation(
+		new Value(IDENTIFIER, "x"),
+		new Value(NUMERIC, "3")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::unaryPlusOperation() {
+	QStringList list = { "x", "POS" };
+
+	UnaryPlusOperation* expectedResult = new UnaryPlusOperation(
+		new Value(IDENTIFIER, "x")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::unaryMinusOperation() {
+	QStringList list = { "x", "NEG" };
+
+	UnaryMinusOperation* expectedResult = new UnaryMinusOperation(
+		new Value(IDENTIFIER, "x")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::inversionOperation() {
+	QStringList list = { "x", "~" };
+
+	LogicalInversionOperation* expectedResult = new LogicalInversionOperation(
+		new Value(IDENTIFIER, "x")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::sinOperation() {
+	QStringList list = { "x", "SIN" };
+
+	SinOperation* expectedResult = new SinOperation(
+		new Value(IDENTIFIER, "x")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+
+void Test_buildExpressionTree::cosOperation() {
+	QStringList list = { "x", "COS" };
+
+	CosOperation* expectedResult = new CosOperation(
+		new Value(IDENTIFIER, "x")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+
+void Test_buildExpressionTree::tanOperation() {
+	QStringList list = { "x", "TG" };
+
+	TanOperation* expectedResult = new TanOperation(
+		new Value(IDENTIFIER, "x")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+
+void Test_buildExpressionTree::cotanOperation() {
+	QStringList list = { "x", "CTG" };
+
+	CotanOperation* expectedResult = new CotanOperation(
+		new Value(IDENTIFIER, "x")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::arcsinOperation() {
+	QStringList list = { "x", "ARCSIN" };
+
+	ArcsinOperation* expectedResult = new ArcsinOperation(
+		new Value(IDENTIFIER, "x")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+
+void Test_buildExpressionTree::arccosOperation() {
+	QStringList list = { "x", "ARCCOS" };
+
+	ArccosOperation* expectedResult = new ArccosOperation(
+		new Value(IDENTIFIER, "x")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+
+void Test_buildExpressionTree::arctanOperation() {
+	QStringList list = { "x", "ARCTG" };
+
+	ArctanOperation* expectedResult = new ArctanOperation(
+		new Value(IDENTIFIER, "x")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+
+void Test_buildExpressionTree::arccotanOperation() {
+	QStringList list = { "x", "ARCCTG" };
+
+	ArccotanOperation* expectedResult = new ArccotanOperation(
+		new Value(IDENTIFIER, "x")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::absOperation() {
+	QStringList list = { "x", "ABS" };
+
+	AbsOperation* expectedResult = new AbsOperation(
+		new Value(IDENTIFIER, "x")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::lnOperation() {
+	QStringList list = { "x", "LN" };
+
+	NaturalLogOperation* expectedResult = new NaturalLogOperation(
+		new Value(IDENTIFIER, "x")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::lgOperation() {
+	QStringList list = { "x", "LG" };
+
+	DecimalLogOperation* expectedResult = new DecimalLogOperation(
+		new Value(IDENTIFIER, "x")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::rootOperation() {
+	QStringList list = { "3", "x", "ROOT" };
+
+	RootOperation* expectedResult = new RootOperation(
+		new Value(NUMERIC, "3"),
+		new Value(IDENTIFIER, "x")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::sqrtOperation() {
+	QStringList list = { "x", "SQRT" };
+
+	SqrtOperation* expectedResult = new SqrtOperation(
+		new Value(IDENTIFIER, "x")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::sumOperation() {
+	QStringList list = { "i", "1", "=", "n", "x", "i", "SUB", "SUM" };
+
+	SumOperation* expectedResult = new SumOperation(
+		new EqualOperation(new Value(IDENTIFIER, "i"), new Value(NUMERIC, "1")),
+		new Value(IDENTIFIER, "n"),
+		new SubIndexOperation(new Value(IDENTIFIER, "x"), new Value(IDENTIFIER, "i"))
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::prodOperation() {
+	QStringList list = { "i", "1", "=", "n", "x", "i", "SUB", "PROD" };
+
+	ProdOperation* expectedResult = new ProdOperation(
+		new EqualOperation(new Value(IDENTIFIER, "i"), new Value(NUMERIC, "1")),
+		new Value(IDENTIFIER, "n"),
+		new SubIndexOperation(new Value(IDENTIFIER, "x"), new Value(IDENTIFIER, "i"))
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::operationHasNotEnoughArguments() {
+	QStringList list = {"x", "3", "+", "*"};
+
+	try {
+		ExpressionTreeNode* realResult = buildExpressionTree(list);
+		QFAIL("Exception wasn't throwed");
+	}
+	catch (InvalidOperandCountException e) {
+	}
+}
+
+void Test_buildExpressionTree::operationHasInvalidValue() {
+	QStringList list = { "x", "3,4", "+", "*" };
+
+	try {
+		ExpressionTreeNode* realResult = buildExpressionTree(list);
+		QFAIL("Exception wasn't throwed");
+	}
+	catch (InvalidValueException e) {
+	}
+}
+
+void Test_buildExpressionTree::operationHasInvalidVariable() {
+	QStringList list = { "x%", "3", "+", "*" };
+
+	try {
+		ExpressionTreeNode* realResult = buildExpressionTree(list);
+		QFAIL("Exception wasn't throwed");
+	}
+	catch (InvalidValueException e) {
+	}
+}
+
+void Test_buildExpressionTree::emptyTokens() {
+	QStringList list = { };
+
+	try {
+		ExpressionTreeNode* realResult = buildExpressionTree(list);
+		QFAIL("Exception wasn't throwed");
+	}
+	catch (EmptyExpressionException e) {
+	}
+}
+
+void Test_buildExpressionTree::leftOperandIsOperation() {
+	QStringList list = {"x", "3", "+", "3", "*"};
+
+	MulOperation* expectedResult = new MulOperation(
+		new PlusOperation(new Value(IDENTIFIER, "x"), new Value(NUMERIC, "3")),
+		new Value(NUMERIC, "3")
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+void Test_buildExpressionTree::rightOperandIsOperation() {
+	QStringList list = { "3", "x", "3", "+", "*" };
+
+	MulOperation* expectedResult = new MulOperation(
+		new Value(NUMERIC, "3"),
+		new PlusOperation(new Value(IDENTIFIER, "x"), new Value(NUMERIC, "3"))
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
+
+
+void Test_buildExpressionTree::allOperandsAreOperations() {
+	QStringList list = { "3", "y", "-", "x", "3", "+", "*" };
+
+	MulOperation* expectedResult = new MulOperation(
+		new SubOperation(new Value(NUMERIC, "3"), new Value(IDENTIFIER, "y")),
+		new PlusOperation(new Value(IDENTIFIER, "x"), new Value(NUMERIC, "3"))
+	);
+
+	ExpressionTreeNode* realResult = buildExpressionTree(list);
+
+	testExpressionTree(realResult, expectedResult);
+}
