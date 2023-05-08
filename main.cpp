@@ -1,4 +1,3 @@
-#include <QCoreApplication>
 #include "functions.h"
 
 QStringList getTokensByWhitespace(QString& expression) {
@@ -12,6 +11,6 @@ QString postfixExpressionToTeX(QString postfixExpression) {
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
-    return a.exec();
+    runTests();
+    return 0;
 }
