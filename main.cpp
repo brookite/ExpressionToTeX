@@ -1,7 +1,8 @@
 #include "functions.h"
+#include <QStringList>
 
 QStringList getTokensByWhitespace(QString& expression) {
-    return {};
+    return QStringList("");
 }
 
 QString postfixExpressionToTeX(QString postfixExpression) {
