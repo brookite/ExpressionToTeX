@@ -10,6 +10,7 @@ CONFIG -= app_bundle
 
 SOURCES += \
         main.cpp \
+        operations.cpp \
         operators.cpp \
         tests/test_buildExpressionTree.cpp \
         tests/test_fillOperationPatternWithParentheses.cpp \
