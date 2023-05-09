@@ -1,5 +1,6 @@
 #include "functions.h"
 #include <QStringList>
+#include "tests/tests.h"
 
 QStringList getTokensByWhitespace(QString& expression) {
     return QStringList("");
