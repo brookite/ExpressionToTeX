@@ -1,4 +1,6 @@
 #include "functions.h"
+#include "expressions.h"
+#include "exceptions.h"
 #include <QStringList>
 #include "tests/tests.h"
 
@@ -33,7 +35,12 @@ QStringList getTokensByWhitespace(QString & expression) {
 }
 
 QString postfixExpressionToTeX(QString postfixExpression) {
-    return "";
+    // Разделить входную строку выражения на составные части (операции и операнды)
+    QStringList tokens = getTokensByWhitespace(postfixExpression);
+    // Преобразовать полученные элементы выражения в дерево выражения
+    ExpressionTreeNode* exprTree = buildExpressionTree(tokens);
+    // Преобразовать дерево выражения в строку выражения в формате TeX
+    return exprTree->toTex();
 }
 
 
