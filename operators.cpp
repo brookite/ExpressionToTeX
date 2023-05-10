@@ -15,5 +15,8 @@ QString fillOperationPatternWithParentheses(QString pattern, Operation* currentO
 
 
 QString getExpressionWithParentheses(QString expression) {
-    return "";
+    // Добавить символ открывающей скобки к началу заданной строки выражения
+    // и символ закрывающей скобки к концу заданной строки выражения
+    //Считать полученную строку результатом преобразования
+    return QString("(%1)").arg(expression);
 }
