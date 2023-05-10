@@ -24,3 +24,77 @@ Value* recognizeValueToken(QString token) {
     }
     return result;
 }
+
+
+ExpressionTreeNode* buildExpressionTree(QStringList& tokens)
+{
+    // Выдать ошибку распознавания выражения, если токены не переданы
+    if (tokens.size() == 0) {
+        throw EmptyExpressionException("Не удалось распознать выражение из входного файла. Вероятно, в нем отсутствуют операнды и операции");
+    }
+
+    // Считать стек выражения пустым
+    QStack<ExpressionTreeNode*> exprStack;
+    for (QString token : tokens) // для каждого токена
+    {
+        int operandCount;
+        if (isOperationToken(token, &operandCount))
+        // токен является оператором
+        {
+            Operation* operation;
+            QList<ExpressionTreeNode*> operands;
+            for (int i = 0; i < operandCount; i++)
+            // повторить по количеству операндов в операции
+            {
+                if (exprStack.isEmpty()) // в стеке не достаточно операндов для изъятия левого операнда
+                {
+                    // Выдать ошибку недостатка операнда
+                    throw InvalidOperandCountException(QString("Недостаточно операндов для операции \"%1\"").arg(token));
+                }
+                // Снять очередной операнд с вершины стека
+                ExpressionTreeNode* operand = exprStack.top();
+                exprStack.pop();
+                operands.insert(0, operand);
+            }
+
+            // Создать узел операции по снятым со стека операндам
+            operation = getOperation(token, operands);
+
+            if (operation == nullptr) // узел операции не был создан
+            {
+                // Выдать ошибку недопустимой операции
+                throw InvalidOperationException(
+                    QString("Неверная операция \"%1\", ожидалась одна из допустимых операций. Проверьте правильность записи указанной операции").arg(token));
+            }
+
+            // Поместить в стек узел данной операции
+            exprStack.push(operation);
+        }
+        else // токен является значением
+        {
+            // Распознать тип выражения (числовое или переменная)
+            Value* valueNode = recognizeValueToken(token);
+            if (valueNode != nullptr) // тип значения распознан
+            {
+                // Поместить значение в стек
+                exprStack.push(valueNode);
+            }
+            else {
+                // Выдать ошибку неверно записанной переменной
+                throw InvalidValueException(
+                    QString("В выражении неверно задано имя переменной \"%1\"").arg(token)
+                    );
+            }
+        }
+    }
+    if (exprStack.count() == 1) // в стеке не осталось операций или операндов
+    {
+        // Считать результатом вершину дерева созданного выражения
+        return exprStack.top();
+    }
+    else {
+        // Выдать ошибку не полностью написанного выражения
+        throw InvalidOperandCountException("Выражение записано не полностью, проверьте правильность записанного выражения и количество операндов операции");
+    }
+}
+
