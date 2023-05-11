@@ -4,7 +4,152 @@
 
 
 Operation* getOperation(QString token, QList<ExpressionTreeNode*> operands) {
-    return nullptr;
+    Operation* result = nullptr;
+
+    if (operands.length() == 1)
+    // передан один операнд
+    {
+        // Создать узел бинарной операции по операндам и токену, если токен соответствует операции
+        ExpressionTreeNode* operand = operands.at(0);
+        if (token == "POS") {
+            result = new UnaryPlusOperation(operand);
+        }
+        else if (token == "NEG") {
+            result = new UnaryMinusOperation(operand);
+        }
+        else if (token == "!" || token == "~") {
+            result = new LogicalInversionOperation(operand);
+        }
+        else if (token == "SIN") {
+            result = new SinOperation(operand);
+        }
+        else if (token == "COS") {
+            result = new CosOperation(operand);
+        }
+        else if (token == "TG") {
+            result = new TanOperation(operand);
+        }
+        else if (token == "CTG") {
+            result = new CotanOperation(operand);
+        }
+        else if (token == "ARCSIN") {
+            result = new ArcsinOperation(operand);
+        }
+        else if (token == "ARCCOS") {
+            result = new ArccosOperation(operand);
+        }
+        else if (token == "ARCTG") {
+            result = new ArctanOperation(operand);
+        }
+        else if (token == "ARCCTG") {
+            result = new ArccotanOperation(operand);
+        }
+        else if (token == "LN") {
+            result = new NaturalLogOperation(operand);
+        }
+        else if (token == "LG") {
+            result = new DecimalLogOperation(operand);
+        }
+        else if (token == "ABS") {
+            result = new AbsOperation(operand);
+        }
+        else if (token == "SQRT") {
+            result = new SqrtOperation(operand);
+        }
+        else if (token == "SUM1") {
+            result = new SumOperation(operand);
+        }
+        else if (token == "PROD1") {
+            result = new ProdOperation(operand);
+        }
+    }
+    else if (operands.length() == 2)
+    // передано два операнда
+    {
+        // Создать узел бинарной операции по операндам и токену, если токен соответствует операции
+        ExpressionTreeNode* leftOperand = operands.at(0);
+        ExpressionTreeNode* rightOperand = operands.at(1);
+
+        if (token == "+") {
+            result = new PlusOperation(leftOperand, rightOperand);
+        }
+        else if (token == "-") {
+            result = new SubOperation(leftOperand, rightOperand);
+        }
+        else if (token == "*") {
+            result = new MulOperation(leftOperand, rightOperand);
+        }
+        else if (token == "/") {
+            result = new DivOperation(leftOperand, rightOperand);
+        }
+        else if (token == "<") {
+            result = new LessOperation(leftOperand, rightOperand);
+        }
+        else if (token == ">") {
+            result = new GreaterOperation(leftOperand, rightOperand);
+        }
+        else if (token == "<=") {
+            result = new LessEqualOperation(leftOperand, rightOperand);
+        }
+        else if (token == ">=") {
+            result = new GreaterEqualOperation(leftOperand, rightOperand);
+        }
+        else if (token == "==" || token == "=") {
+            result = new EqualOperation(leftOperand, rightOperand);
+        }
+        else if (token == "!=") {
+            result = new NotEqualOperation(leftOperand, rightOperand);
+        }
+        else if (token == "^") {
+            result = new PowOperation(leftOperand, rightOperand);
+        }
+        else if (token == "%") {
+            result = new ModOperation(leftOperand, rightOperand);
+        }
+        else if (token == "LOG") {
+            result = new LogOperation(leftOperand, rightOperand);
+        }
+        else if (token == "SUB") {
+            result = new SubIndexOperation(leftOperand, rightOperand);
+        }
+        else if (token == "&") {
+            result = new LogicalAndOperation(leftOperand, rightOperand);
+        }
+        else if (token == "|") {
+            result = new LogicalOrOperation(leftOperand, rightOperand);
+        }
+        else if (token == "XOR") {
+            result = new LogicalXorOperation(leftOperand, rightOperand);
+        }
+        else if (token == "FORALL") {
+            result = new AllQuantifierOperation(leftOperand, rightOperand);
+        }
+        else if (token == "EXISTS") {
+            result = new ExistQuantifierOperation(leftOperand, rightOperand);
+        }
+        else if (token == "SUM2") {
+            result = new SumOperation(leftOperand, rightOperand);
+        }
+        else if (token == "PROD2") {
+            result = new ProdOperation(leftOperand, rightOperand);
+        }
+        else if (token == "ROOT") {
+            result = new RootOperation(leftOperand, rightOperand);
+        }
+    }
+    else if (operands.length() == 3)
+    // передано 3 операнда
+    {
+        // Создать узел тернарной операции по операндам и токену, если токен соответствует операции
+        if (token == "SUM") {
+            result = new SumOperation(operands.at(0), operands.at(1), operands.at(2));
+        }
+        else if (token == "PROD") {
+            result = new ProdOperation(operands.at(0), operands.at(1), operands.at(2));
+        }
+    }
+
+    return result;
 }
 
 
