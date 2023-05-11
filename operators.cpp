@@ -8,9 +8,48 @@ Operation* getOperation(QString token, QList<ExpressionTreeNode*> operands) {
 }
 
 
-bool isOperationToken(QString token, int * operandCount) {
-    return false;
+bool isOperationToken(QString token, int * operandsCount) {
+    const QStringList binaryOperators = {
+        "+", "-", "*", "/", "<", ">", "<=", ">=", "=", "==", "%",
+        "!=", "^", "LOG", "SUB", "&", "|", "XOR", "FORALL", "EXISTS",
+        "ROOT", "SUM2", "PROD2"
+    };
+
+    const QStringList unaryOperators = {
+        "POS", "NEG", "!", "~", "SIN", "COS", "TG",
+        "CTG", "ARCSIN", "ARCCOS", "ARCTG", "ARCCTG",
+        "ABS", "LN", "LG", "SQRT", "SUM1", "PROD1"
+    };
+
+    const QStringList ternaryOperators = {
+        "SUM", "PROD"
+    };
+
+    bool isFound = false;
+    if (unaryOperators.contains(token))
+    // токен принадлежит токенам поддерживаемых операторов, составляющих унарную операцию
+    {
+        // токен является оператором выражения, операция – унарная
+        isFound = true;
+        *operandsCount = 1;
+    }
+    else if (binaryOperators.contains(token))
+    //токен принадлежит токенам поддерживаемых операторов, составляющих бинарную операцию
+    {
+        // токен является оператором выражения, операция – бинарная
+        isFound = true;
+        *operandsCount = 2;
+    }
+    else if (ternaryOperators.contains(token))
+    //токен принадлежит токенам поддерживаемых операторов, составляющих тернарную операцию
+    {
+        // токен является оператором выражения, операция – тернарная
+        isFound = true;
+        *operandsCount = 3;
+    }
+    return isFound;
 }
+
 
 QString fillOperationPatternWithParentheses(QString pattern, Operation* currentOp) {
     QString result;
