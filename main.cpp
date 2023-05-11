@@ -4,6 +4,7 @@
 #include <QStringList>
 #include "tests/tests.h"
 
+
 QStringList getTokensByWhitespace(QString & expression) {
     // Считать, что выходной список токенов пуст
     QStringList tokens;
