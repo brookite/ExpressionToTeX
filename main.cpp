@@ -48,7 +48,7 @@ QString postfixExpressionToTeX(QString postfixExpression) {
 
 int main(int argc, char *argv[])
 {
-    runTests();
+    //runTests();
 
     QString inputArgsErr("Неверно указаны входной и выходной файлы. Возможно, один из них был пропущен");
     QString inputFileErr("Неверно указан файл с входными данными. Возможно, файл не существует");
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
             return 1;
         }
         else {
-            QString fileName(argv[0]);
+            QString fileName(argv[1]);
             QFile inputFile(fileName);
             if (inputFile.exists()) {
                 if (inputFile.open(QIODevice::ReadOnly)) {
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
                         return 1;
                     }
                     else {
-                        QFile outFile(argv[1]);
+                        QFile outFile(argv[2]);
                         QString result = postfixExpressionToTeX(inputData);
                         if (outFile.open(QIODevice::WriteOnly)) {
                             QTextStream out(&outFile);
