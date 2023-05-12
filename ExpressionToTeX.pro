@@ -21,6 +21,7 @@ SOURCES += \
         tests/test_isOperationToken.cpp \
         tests/test_postfixExpressionToTeX.cpp \
         tests/test_recognizeValueToken.cpp \
+        tests/testapi.cpp \
         tests/tests.cpp
 
 # Default rules for deployment.
@@ -41,4 +42,5 @@ HEADERS += \
     tests/test_isOperationToken.h \
     tests/test_postfixExpressionToTeX.h \
     tests/test_recognizeValueToken.h \
+    tests/testapi.h \
     tests/tests.h
