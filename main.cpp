@@ -56,9 +56,8 @@ int main(int argc, char *argv[])
     QString lineCountErr("Программа принимает на вход файлы, состоящие из одной строки. Укажите только одну строку во входном файле");
 
     QTextStream err(stdout);
+    err.setCodec("cp866");
 
-    //DEBUG
-    argc = 2;
     try {
         if (argc < 2) {
             err << inputArgsErr;
