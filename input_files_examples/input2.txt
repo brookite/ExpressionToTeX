@@ -1,0 +1,1 @@
+i 0 = n x i SUB y i SUB * e / SUM z + a 2 ^ -
