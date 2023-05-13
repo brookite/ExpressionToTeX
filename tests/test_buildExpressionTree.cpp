@@ -479,7 +479,7 @@ void Test_buildExpressionTree::operationHasNotEnoughArguments() {
 
 	try {
 		ExpressionTreeNode* realResult = buildExpressionTree(list);
-		QFAIL("Exception wasn't throwed");
+        QFAIL("The exception was not thrown");
 	}
 	catch (InvalidOperandCountException e) {
 	}
@@ -490,7 +490,7 @@ void Test_buildExpressionTree::operationHasInvalidValue() {
 
 	try {
 		ExpressionTreeNode* realResult = buildExpressionTree(list);
-		QFAIL("Exception wasn't throwed");
+        QFAIL("The exception was not thrown");
 	}
 	catch (InvalidValueException e) {
 	}
@@ -501,7 +501,7 @@ void Test_buildExpressionTree::operationHasInvalidVariable() {
 
 	try {
 		ExpressionTreeNode* realResult = buildExpressionTree(list);
-		QFAIL("Exception wasn't throwed");
+        QFAIL("The exception was not thrown");
 	}
 	catch (InvalidValueException e) {
 	}
@@ -512,7 +512,7 @@ void Test_buildExpressionTree::emptyTokens() {
 
 	try {
 		ExpressionTreeNode* realResult = buildExpressionTree(list);
-		QFAIL("Exception wasn't throwed");
+        QFAIL("The exception was not thrown");
 	}
 	catch (EmptyExpressionException e) {
 	}
