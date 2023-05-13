@@ -364,7 +364,7 @@ void Test_postfixExpressionToTex::sqrtOperation() {
 
 void Test_postfixExpressionToTex::sumOperation() {
 	QString inputExpression = "i 1 = n x i SUB SUM";
-	QString expectedResult = "\\sum_{i = 1}^{n}{{x}_{i}}";
+    QString expectedResult = "\\sum_{i = 1}^{n}{({x}_{i})}";
 	QString realResult = postfixExpressionToTeX(inputExpression);
 
 	QCOMPARE(expectedResult, realResult);
@@ -372,7 +372,7 @@ void Test_postfixExpressionToTex::sumOperation() {
 
 void Test_postfixExpressionToTex::prodOperation() {
 	QString inputExpression = "k 1 = n x i SUB PROD";
-	QString expectedResult = "\\prod_{k = 1}^{n}{{x}_{i}}";
+    QString expectedResult = "\\prod_{k = 1}^{n}{({x}_{i})}";
 	QString realResult = postfixExpressionToTeX(inputExpression);
 
 	QCOMPARE(expectedResult, realResult);
@@ -380,7 +380,7 @@ void Test_postfixExpressionToTex::prodOperation() {
 
 void Test_postfixExpressionToTex::sumOperationWithoutEndInterval() {
 	QString inputExpression = "i 1 = x i SUB SUM2";
-	QString expectedResult = "\\sum_{i = 1}{{x}_{i}}";
+    QString expectedResult = "\\sum_{i = 1}{({x}_{i})}";
 	QString realResult = postfixExpressionToTeX(inputExpression);
 
 	QCOMPARE(expectedResult, realResult);
@@ -388,7 +388,7 @@ void Test_postfixExpressionToTex::sumOperationWithoutEndInterval() {
 
 void Test_postfixExpressionToTex::prodOperationWithoutEndInterval() {
 	QString inputExpression = "i 1 = x i SUB PROD2";
-	QString expectedResult = "\\prod_{i = 1}{{x}_{i}}";
+    QString expectedResult = "\\prod_{i = 1}{({x}_{i})}";
 	QString realResult = postfixExpressionToTeX(inputExpression);
 
 	QCOMPARE(expectedResult, realResult);
@@ -396,7 +396,7 @@ void Test_postfixExpressionToTex::prodOperationWithoutEndInterval() {
 
 void Test_postfixExpressionToTex::sumOperationWithoutIntervals() {
 	QString inputExpression = "x i SUB SUM1";
-	QString expectedResult = "\\sum{{x}_{i}}";
+    QString expectedResult = "\\sum{({x}_{i})}";
 	QString realResult = postfixExpressionToTeX(inputExpression);
 
 	QCOMPARE(expectedResult, realResult);
@@ -404,7 +404,7 @@ void Test_postfixExpressionToTex::sumOperationWithoutIntervals() {
 
 void Test_postfixExpressionToTex::prodOperationWithoutIntervals() {
 	QString inputExpression = "x i SUB PROD1";
-	QString expectedResult = "\\prod{{x}_{i}}";
+    QString expectedResult = "\\prod{({x}_{i})}";
 	QString realResult = postfixExpressionToTeX(inputExpression);
 
 	QCOMPARE(expectedResult, realResult);
@@ -444,7 +444,7 @@ void Test_postfixExpressionToTex::longVariableInExpression() {
 
 void Test_postfixExpressionToTex::complexTest1() {
 	QString inputExpression = "i 0 = n x i SUB y i SUB * e / SUM z + a 2 ^ -";
-	QString expectedResult = "\\sum_{i = 0}^{n}{\\frac{{x}_{i} \\cdot {y}_{i}}{e}} + z - {a}^{2}";
+    QString expectedResult = "\\sum_{i = 0}^{n}{(\\frac{{x}_{i} \\cdot {y}_{i}}{e})} + z - {a}^{2}";
 	QString realResult = postfixExpressionToTeX(inputExpression);
 
 	QCOMPARE(expectedResult, realResult);
@@ -452,7 +452,7 @@ void Test_postfixExpressionToTex::complexTest1() {
 
 void Test_postfixExpressionToTex::complexTest2() {
 	QString inputExpression = "i 1 = n j 1 = m 3 y j SUB * x i SUB + SUM SUM";
-	QString expectedResult = "\\sum_{i = 1}^{n}{\\sum_{j = 1}^{m}{3 \\cdot {y}_{j} + {x}_{i}}}";
+    QString expectedResult = "\\sum_{i = 1}^{n}{(\\sum_{j = 1}^{m}{(3 \\cdot {y}_{j} + {x}_{i})})}";
 	QString realResult = postfixExpressionToTeX(inputExpression);
 
 	QCOMPARE(expectedResult, realResult);

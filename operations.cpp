@@ -649,13 +649,28 @@ public:
 
 	virtual QString toTex() {
 		if (getChildrenCount() == 1) {
-			return QString("\\sum{%2}").arg(getChild(0)->toTex());
+            ExpressionTreeNode * valueToSum = getChild(0);
+            QString valueToSumString = valueToSum->toTex();
+            if (valueToSum->getChildrenCount() > 0) {
+                valueToSumString = getExpressionWithParentheses(valueToSumString);
+            }
+            return QString("\\sum{%2}").arg(valueToSumString);
 		}
 		else if (getChildrenCount() == 2) {
-			return QString("\\sum_{%1}{%2}").arg(getChild(0)->toTex(), getChild(1)->toTex());
+            ExpressionTreeNode * valueToSum = getChild(1);
+            QString valueToSumString = valueToSum->toTex();
+            if (valueToSum->getChildrenCount() > 0) {
+                valueToSumString = getExpressionWithParentheses(valueToSumString);
+            }
+            return QString("\\sum_{%1}{%2}").arg(getChild(0)->toTex(), valueToSumString);
 		}
 		else if (getChildrenCount() == 3) {
-			return QString("\\sum_{%1}^{%2}{%3}").arg(getChild(0)->toTex(), getChild(1)->toTex(), getChild(2)->toTex());
+            ExpressionTreeNode * valueToSum = getChild(2);
+            QString valueToSumString = valueToSum->toTex();
+            if (valueToSum->getChildrenCount() > 0) {
+                valueToSumString = getExpressionWithParentheses(valueToSumString);
+            }
+            return QString("\\sum_{%1}^{%2}{%3}").arg(getChild(0)->toTex(), getChild(1)->toTex(), valueToSumString);
 		}
 	}
 
@@ -681,13 +696,28 @@ public:
 
 	virtual QString toTex() {
 		if (getChildrenCount() == 1) {
-			return QString("\\prod{%2}").arg(getChild(0)->toTex());
+            ExpressionTreeNode * valueToProd = getChild(0);
+            QString valueToProdString = valueToProd->toTex();
+            if (valueToProd->getChildrenCount() > 0) {
+                valueToProdString = getExpressionWithParentheses(valueToProdString);
+            }
+            return QString("\\prod{%2}").arg(valueToProdString);
 		}
 		else if (getChildrenCount() == 2) {
-			return QString("\\prod_{%1}{%2}").arg(getChild(0)->toTex(), getChild(1)->toTex());
+            ExpressionTreeNode * valueToProd = getChild(1);
+            QString valueToProdString = valueToProd->toTex();
+            if (valueToProd->getChildrenCount() > 0) {
+                valueToProdString = getExpressionWithParentheses(valueToProdString);
+            }
+            return QString("\\prod_{%1}{%2}").arg(getChild(0)->toTex(), valueToProdString);
 		}
 		else if (getChildrenCount() == 3) {
-			return QString("\\prod_{%1}^{%2}{%3}").arg(getChild(0)->toTex(), getChild(1)->toTex(), getChild(2)->toTex());
+            ExpressionTreeNode * valueToProd = getChild(2);
+            QString valueToProdString = valueToProd->toTex();
+            if (valueToProd->getChildrenCount() > 0) {
+                valueToProdString = getExpressionWithParentheses(valueToProdString);
+            }
+            return QString("\\prod_{%1}^{%2}{%3}").arg(getChild(0)->toTex(), getChild(1)->toTex(), valueToProdString);
 		}
 	}
 
