@@ -48,7 +48,7 @@ QString postfixExpressionToTeX(QString postfixExpression) {
 
 int main(int argc, char *argv[])
 {
-    //runTests();
+    runTests();
 
     QString inputArgsErr("Неверно указаны входной и выходной файлы. Возможно, один из них был пропущен");
     QString inputFileErr("Неверно указан файл с входными данными. Возможно, файл не существует");

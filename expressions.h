@@ -18,13 +18,13 @@ struct ExpressionTreeNode
 public:
     /*!
      * \brief Конструктор узла дерева выражения
-     * \param children - дочерние узлы данного узла дерева
+     * \param[in] children - дочерние узлы данного узла дерева
      */
     ExpressionTreeNode(QList<ExpressionTreeNode*> children);
 
     /*!
      * \brief Получить дочерний узел по его индекс
-     * \param index - индекс дочернего узла (начиная с 0)
+     * \param[in] index - индекс дочернего узла (начиная с 0)
      * \return дочерний узел, соответствующий индексу
      */
     ExpressionTreeNode* getChild(int index);
@@ -59,7 +59,7 @@ struct Operation : public ExpressionTreeNode
 {
     /*!
      * \brief Конструктор операции
-     * \param children - операнды операции
+     * \param[in] children - операнды операции
      */
     Operation(QList<ExpressionTreeNode*> children);
 
@@ -84,8 +84,8 @@ struct Value : public ExpressionTreeNode {
 public:
     /*!
      * \brief Конструктор значения
-     * \param type - тип значения
-     * \param value - токен значения
+     * \param[in] type - тип значения
+     * \param[in] value - токен значения
      */
     Value(ValueType type, QString value);
 
@@ -118,13 +118,20 @@ protected:
 };
 
 
-/*! Строит дерево выражения по заданным токенам выражения, записанного в постфиксной (обратной польской) записи
+/*!
+* \brief Строит дерево выражения по заданным токенам выражения, записанного в постфиксной (обратной польской) записи
 * \param[in] tokens - токены выражения
+* \throw EmptyExpressionException - передано пустое выражение
+* \throw InvalidOperandCountException - неверно задано количество операндов у операции
+* \throw InvalidOperationException - неверная операция
+* \throw InvalidValueException - неверно записано числовое выражение или переменная
 * \return указатель на вершину дерева выражения
 */
 ExpressionTreeNode* buildExpressionTree(QStringList& tokens);
 
-/*! Создает объект значения по переданному токену, если токен соответствует значению
+
+/*!
+* \brief Создает объект значения по переданному токену, если токен соответствует значению
 * \param[in] token - токен, соответствующий значению
 * \return указатель на объект, представляющий собой значение, если токен соответствует значению, иначе - нулевой указатель
 */

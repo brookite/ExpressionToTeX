@@ -43,7 +43,7 @@ ValueType Value::getType() {
     return type;
 }
 
-virtual QString Value::toTex() {
+QString Value::toTex() {
     return value;
 }
 
