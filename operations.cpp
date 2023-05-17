@@ -38,21 +38,32 @@ struct MulOperation : Operation {
 	MulOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
 	virtual QString toTex() {
+        // Получить представление операции со знаком умножения
+        QString result = fillOperationPatternWithParentheses("%1 \\cdot %2", this);
+
 		Value* leftValue = dynamic_cast<Value*>(getChild(0));
 		Value* rightValue = dynamic_cast<Value*>(getChild(1));
-		if (leftValue != nullptr && rightValue != nullptr) {
+        if (leftValue != nullptr && rightValue != nullptr)
+            // если операнды данной операции - значения
+        {
 			if (leftValue->getType() == NUMERIC 
 				&& rightValue->getType() == IDENTIFIER 
-				&& rightValue->getValue().length() == 1) {
-				return QString("%1%2").arg(leftValue->toTex(), rightValue->toTex());
+                && rightValue->getValue().length() == 1)
+            // если левый операнд - число, правый - переменная длины 1
+            {
+                // Считать результатом представление операции без знака умножения
+                result = QString("%1%2").arg(leftValue->toTex(), rightValue->toTex());
 			}
 			else if (leftValue->getType() == IDENTIFIER 
 				&& rightValue->getType() == NUMERIC 
-				&& leftValue->getValue().length() == 1) {
-				return QString("%1%2").arg(rightValue->toTex(), leftValue->toTex());
-			}
+                && leftValue->getValue().length() == 1)
+                // если левый операнд - переменная длины 1, правый - число
+            {
+                // Считать результатом представление операции без знака умножения
+                result = QString("%1%2").arg(rightValue->toTex(), leftValue->toTex());
+            }
 		}
-		return fillOperationPatternWithParentheses("%1 \\cdot %2", this);
+        return result;
 	}
 
 	virtual QString getOperationToken() {
@@ -187,7 +198,10 @@ struct LogOperation : Operation {
 
 	virtual QString toTex() {
 		QString rightOperand = getChild(1)->toTex();
-		if (getChild(1)->getChildrenCount() != 0) {
+        if (getChild(1)->getChildrenCount() != 0)
+            // правый операнд является составным
+        {
+            // Обернуть правый операнд в скобки
 			rightOperand = getExpressionWithParentheses(rightOperand);
 		}
 		return QString("\\log_{%1}{%2}").arg(getChild(0)->toTex(), rightOperand);
@@ -316,7 +330,10 @@ struct UnaryPlusOperation : Operation {
 
 	virtual QString toTex() {
 		QString operand = getChild(0)->toTex();
-		if (getChild(0)->getChildrenCount() != 0) {
+        if (getChild(0)->getChildrenCount() != 0)
+            // операнд является составным
+        {
+            // Обернуть операнд в скобки
 			operand = getExpressionWithParentheses(operand);
 		}
 		return QString("+%1").arg(operand);
@@ -334,11 +351,14 @@ struct UnaryPlusOperation : Operation {
 struct UnaryMinusOperation : Operation {
 	UnaryMinusOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
-	virtual QString toTex() {
-		QString operand = getChild(0)->toTex();
-		if (getChild(0)->getChildrenCount() != 0) {
-			operand = getExpressionWithParentheses(operand);
-		}
+    virtual QString toTex() {
+        QString operand = getChild(0)->toTex();
+        if (getChild(0)->getChildrenCount() != 0)
+        // операнд является составным
+        {
+            // Обернуть операнд в скобки
+            operand = getExpressionWithParentheses(operand);
+        }
 		return QString("-%1").arg(operand);
 	}
 
@@ -370,11 +390,14 @@ struct LogicalInversionOperation : Operation {
 struct SinOperation : Operation {
 	SinOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
-	virtual QString toTex() {
-		QString operand = getChild(0)->toTex();
-		if (getChild(0)->getChildrenCount() != 0) {
-			operand = getExpressionWithParentheses(operand);
-		}
+    virtual QString toTex() {
+        QString operand = getChild(0)->toTex();
+        if (getChild(0)->getChildrenCount() != 0)
+        // операнд является составным
+        {
+            // Обернуть операнд в скобки
+            operand = getExpressionWithParentheses(operand);
+        }
 		return QString("\\sin{%1}").arg(operand);
 	}
 
@@ -390,11 +413,14 @@ struct SinOperation : Operation {
 struct CosOperation : Operation {
 	CosOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
-	virtual QString toTex() {
-		QString operand = getChild(0)->toTex();
-		if (getChild(0)->getChildrenCount() != 0) {
-			operand = getExpressionWithParentheses(operand);
-		}
+    virtual QString toTex() {
+        QString operand = getChild(0)->toTex();
+        if (getChild(0)->getChildrenCount() != 0)
+        // операнд является составным
+        {
+            // Обернуть операнд в скобки
+            operand = getExpressionWithParentheses(operand);
+        }
 		return QString("\\cos{%1}").arg(operand);
 	}
 
@@ -410,11 +436,14 @@ struct CosOperation : Operation {
 struct TanOperation : Operation {
 	TanOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
-	virtual QString toTex() {
-		QString operand = getChild(0)->toTex();
-		if (getChild(0)->getChildrenCount() != 0) {
-			operand = getExpressionWithParentheses(operand);
-		}
+    virtual QString toTex() {
+        QString operand = getChild(0)->toTex();
+        if (getChild(0)->getChildrenCount() != 0)
+        // операнд является составным
+        {
+            // Обернуть операнд в скобки
+            operand = getExpressionWithParentheses(operand);
+        }
 		return QString("\\tan{%1}").arg(operand);
 	}
 
@@ -430,11 +459,14 @@ struct TanOperation : Operation {
 struct CotanOperation : Operation {
 	CotanOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
-	virtual QString toTex() {
-		QString operand = getChild(0)->toTex();
-		if (getChild(0)->getChildrenCount() != 0) {
-			operand = getExpressionWithParentheses(operand);
-		}
+    virtual QString toTex() {
+        QString operand = getChild(0)->toTex();
+        if (getChild(0)->getChildrenCount() != 0)
+        // операнд является составным
+        {
+            // Обернуть операнд в скобки
+            operand = getExpressionWithParentheses(operand);
+        }
 		return QString("\\cot{%1}").arg(operand);
 	}
 
@@ -450,11 +482,14 @@ struct CotanOperation : Operation {
 struct ArcsinOperation : Operation {
 	ArcsinOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
-	virtual QString toTex() {
-		QString operand = getChild(0)->toTex();
-		if (getChild(0)->getChildrenCount() != 0) {
-			operand = getExpressionWithParentheses(operand);
-		}
+    virtual QString toTex() {
+        QString operand = getChild(0)->toTex();
+        if (getChild(0)->getChildrenCount() != 0)
+        // операнд является составным
+        {
+            // Обернуть операнд в скобки
+            operand = getExpressionWithParentheses(operand);
+        }
 		return QString("\\arcsin{%1}").arg(operand);
 	}
 
@@ -470,11 +505,14 @@ struct ArcsinOperation : Operation {
 struct ArccosOperation : Operation {
 	ArccosOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
-	virtual QString toTex() {
-		QString operand = getChild(0)->toTex();
-		if (getChild(0)->getChildrenCount() != 0) {
-			operand = getExpressionWithParentheses(operand);
-		}
+    virtual QString toTex() {
+        QString operand = getChild(0)->toTex();
+        if (getChild(0)->getChildrenCount() != 0)
+        // операнд является составным
+        {
+            // Обернуть операнд в скобки
+            operand = getExpressionWithParentheses(operand);
+        }
 		return QString("\\arccos{%1}").arg(operand);
 	}
 
@@ -490,11 +528,14 @@ struct ArccosOperation : Operation {
 struct ArctanOperation : Operation {
 	ArctanOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
-	virtual QString toTex() {
-		QString operand = getChild(0)->toTex();
-		if (getChild(0)->getChildrenCount() != 0) {
-			operand = getExpressionWithParentheses(operand);
-		}
+    virtual QString toTex() {
+        QString operand = getChild(0)->toTex();
+        if (getChild(0)->getChildrenCount() != 0)
+        // операнд является составным
+        {
+            // Обернуть операнд в скобки
+            operand = getExpressionWithParentheses(operand);
+        }
 		return QString("\\arctan{%1}").arg(operand);
 	}
 
@@ -510,11 +551,14 @@ struct ArctanOperation : Operation {
 struct ArccotanOperation : Operation {
 	ArccotanOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
-	virtual QString toTex() {
-		QString operand = getChild(0)->toTex();
-		if (getChild(0)->getChildrenCount() != 0) {
-			operand = getExpressionWithParentheses(operand);
-		}
+    virtual QString toTex() {
+        QString operand = getChild(0)->toTex();
+        if (getChild(0)->getChildrenCount() != 0)
+        // операнд является составным
+        {
+            // Обернуть операнд в скобки
+            operand = getExpressionWithParentheses(operand);
+        }
 		return QString("\\arccot{%1}").arg(operand);
 	}
 
@@ -546,11 +590,14 @@ struct AbsOperation : Operation {
 struct NaturalLogOperation : Operation {
 	NaturalLogOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
-	virtual QString toTex() {
-		QString operand = getChild(0)->toTex();
-		if (getChild(0)->getChildrenCount() != 0) {
-			operand = getExpressionWithParentheses(operand);
-		}
+    virtual QString toTex() {
+        QString operand = getChild(0)->toTex();
+        if (getChild(0)->getChildrenCount() != 0)
+        // операнд является составным
+        {
+            // Обернуть операнд в скобки
+            operand = getExpressionWithParentheses(operand);
+        }
 		return QString("\\ln{%1}").arg(operand);
 	}
 
@@ -566,11 +613,14 @@ struct NaturalLogOperation : Operation {
 struct DecimalLogOperation : Operation {
 	DecimalLogOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
-	virtual QString toTex() {
-		QString operand = getChild(0)->toTex();
-		if (getChild(0)->getChildrenCount() != 0) {
-			operand = getExpressionWithParentheses(operand);
-		}
+    virtual QString toTex() {
+        QString operand = getChild(0)->toTex();
+        if (getChild(0)->getChildrenCount() != 0)
+        // операнд является составным
+        {
+            // Обернуть операнд в скобки
+            operand = getExpressionWithParentheses(operand);
+        }
 		return QString("\\lg{%1}").arg(operand);
 	}
 
@@ -621,7 +671,10 @@ struct PowOperation : Operation {
 
 	virtual QString toTex() {
 		QString leftOperand = getChild(0)->toTex();
-		if (getChild(0)->getChildrenCount() != 0) {
+        if (getChild(0)->getChildrenCount() != 0)
+            // левый операнд - составной
+        {
+            // Обернуть левый операнд в скобки
 			leftOperand = getExpressionWithParentheses(leftOperand);
 		}
 		return QString("{%1}^{%2}").arg(leftOperand, getChild(1)->toTex());
@@ -648,26 +701,41 @@ public:
 		: Operation({ node }) {}
 
 	virtual QString toTex() {
-		if (getChildrenCount() == 1) {
+        if (getChildrenCount() == 1)
+            // количество операндов операции - 1
+        {
             ExpressionTreeNode * valueToSum = getChild(0);
             QString valueToSumString = valueToSum->toTex();
-            if (valueToSum->getChildrenCount() > 0) {
+            if (valueToSum->getChildrenCount() > 0)
+                // значение суммы является операцией
+            {
+                // Обернуть значение суммы в скобки
                 valueToSumString = getExpressionWithParentheses(valueToSumString);
             }
             return QString("\\sum{%2}").arg(valueToSumString);
 		}
-		else if (getChildrenCount() == 2) {
+        else if (getChildrenCount() == 2)
+            // количество операндов операции - 2
+        {
             ExpressionTreeNode * valueToSum = getChild(1);
             QString valueToSumString = valueToSum->toTex();
-            if (valueToSum->getChildrenCount() > 0) {
+            if (valueToSum->getChildrenCount() > 0)
+                // значение суммы является операцией
+            {
+                // Обернуть значение суммы в скобки
                 valueToSumString = getExpressionWithParentheses(valueToSumString);
             }
             return QString("\\sum_{%1}{%2}").arg(getChild(0)->toTex(), valueToSumString);
 		}
-		else if (getChildrenCount() == 3) {
+        else if (getChildrenCount() == 3)
+            // количество операндов операции - 3
+        {
             ExpressionTreeNode * valueToSum = getChild(2);
             QString valueToSumString = valueToSum->toTex();
-            if (valueToSum->getChildrenCount() > 0) {
+            if (valueToSum->getChildrenCount() > 0)
+                // значение суммы является операцией
+            {
+                // Обернуть значение суммы в скобки
                 valueToSumString = getExpressionWithParentheses(valueToSumString);
             }
             return QString("\\sum_{%1}^{%2}{%3}").arg(getChild(0)->toTex(), getChild(1)->toTex(), valueToSumString);
@@ -695,26 +763,41 @@ public:
 		: Operation({ node }) {}
 
 	virtual QString toTex() {
-		if (getChildrenCount() == 1) {
+        if (getChildrenCount() == 1)
+            // количество операндов операции - 1
+        {
             ExpressionTreeNode * valueToProd = getChild(0);
             QString valueToProdString = valueToProd->toTex();
-            if (valueToProd->getChildrenCount() > 0) {
+            if (valueToProd->getChildrenCount() > 0)
+                // значение произведения является операцией
+            {
+                // Обернуть значение произведения в скобки
                 valueToProdString = getExpressionWithParentheses(valueToProdString);
             }
             return QString("\\prod{%2}").arg(valueToProdString);
 		}
-		else if (getChildrenCount() == 2) {
+        else if (getChildrenCount() == 2)
+            // количество операндов операции - 2
+        {
             ExpressionTreeNode * valueToProd = getChild(1);
             QString valueToProdString = valueToProd->toTex();
-            if (valueToProd->getChildrenCount() > 0) {
+            if (valueToProd->getChildrenCount() > 0)
+                // значение произведения является операцией
+            {
+                // Обернуть значение произведения в скобки
                 valueToProdString = getExpressionWithParentheses(valueToProdString);
             }
             return QString("\\prod_{%1}{%2}").arg(getChild(0)->toTex(), valueToProdString);
 		}
-		else if (getChildrenCount() == 3) {
+        else if (getChildrenCount() == 3)
+            // количество операндов операции - 3
+        {
             ExpressionTreeNode * valueToProd = getChild(2);
             QString valueToProdString = valueToProd->toTex();
-            if (valueToProd->getChildrenCount() > 0) {
+            if (valueToProd->getChildrenCount() > 0)
+                // значение произведения является операцией
+            {
+                // Обернуть значение произведения в скобки
                 valueToProdString = getExpressionWithParentheses(valueToProdString);
             }
             return QString("\\prod_{%1}^{%2}{%3}").arg(getChild(0)->toTex(), getChild(1)->toTex(), valueToProdString);
