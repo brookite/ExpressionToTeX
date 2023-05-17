@@ -2,71 +2,121 @@
 #include <QString>
 #include <QList>
 
+/*!
+ * \brief Перечисление возможных типов значений токенов обратной польской записи
+ */
 enum ValueType {
-    NUMERIC, IDENTIFIER
+    NUMERIC, // числовое значение
+    IDENTIFIER // переменная
 };
 
-
+/*!
+ * \brief Узел дерева выражения
+ */
 struct ExpressionTreeNode
 {
 public:
-    ExpressionTreeNode(QList<ExpressionTreeNode*> children)
-    {
-        this->children = children;
-    };
+    /*!
+     * \brief Конструктор узла дерева выражения
+     * \param children - дочерние узлы данного узла дерева
+     */
+    ExpressionTreeNode(QList<ExpressionTreeNode*> children);
 
-    ExpressionTreeNode* getChild(int index) {
-        return children.at(index);
-    }
+    /*!
+     * \brief Получить дочерний узел по его индекс
+     * \param index - индекс дочернего узла (начиная с 0)
+     * \return дочерний узел, соответствующий индексу
+     */
+    ExpressionTreeNode* getChild(int index);
 
-    virtual int getChildrenCount() {
-        return children.length();
-    }
+    /*!
+     * \brief Возвращает количество дочерних узлов у данного узла дерева
+     * \return количество дочерних узлов у данного узла дерева
+     */
+    virtual int getChildrenCount();
 
+    /*!
+     * \brief Преобразует узел дерева выражения в строку формулы на языке TeX
+     * \return строка формулы на языке TeX
+     */
     virtual QString toTex() = 0;
 
-    virtual ~ExpressionTreeNode() {
-        for (int i = 0; i < children.length(); i++) {
-            delete children.at(i);
-        }
-    }
+    /*!
+     * \brief Деструктор узла дерева выражения
+     */
+    virtual ~ExpressionTreeNode();
 protected:
+    /*!
+     * \brief Дочерние узлы дерева выражений
+     */
     QList<ExpressionTreeNode*> children;
 };
 
-
+/*!
+ * \brief Представление операции в виде объекта
+ */
 struct Operation : public ExpressionTreeNode
 {
-    Operation(QList<ExpressionTreeNode*> children) : ExpressionTreeNode(children) {
-    }
+    /*!
+     * \brief Конструктор операции
+     * \param children - операнды операции
+     */
+    Operation(QList<ExpressionTreeNode*> children);
 
+    /*!
+     * \brief Получить токен данной операции в обратной польской записи
+     * \return токен операции в обратной польской записи
+     */
     virtual QString getOperationToken() = 0;
+
+    /*!
+     * \brief Получить приоритет данной операции
+     * \return приоритет данной операции в виде целого числа (значение -1 - приоритет не учитывается)
+     */
     virtual int getPriority() = 0;
 };
 
 
+/*!
+ * \brief Представления значения в виде объекта
+ */
 struct Value : public ExpressionTreeNode {
 public:
-    Value(ValueType type, QString value) : ExpressionTreeNode({}) {
-        this->type = type;
-        this->value = value;
-    }
+    /*!
+     * \brief Конструктор значения
+     * \param type - тип значения
+     * \param value - токен значения
+     */
+    Value(ValueType type, QString value);
 
-    QString getValue() {
-        return value;
-    }
+    /*!
+     * \brief Получить значение
+     * \return значение
+     */
+    QString getValue();
 
-    ValueType getType() {
-        return type;
-    }
+    /*!
+     * \brief Получить тип значения
+     * \return тип значения
+     */
+    ValueType getType();
 
-    virtual QString toTex() {
-        return value;
-    }
+    /*!
+     * \brief Преобразовать значение в строку на языке TeX
+     * \return строка значения на языке TeX
+     */
+    virtual QString toTex();
 protected:
+    /*!
+     * \brief Значение
+     */
     QString value;
+    /*!
+     * \brief Тип
+     */
     ValueType type;
 };
+
 
 /*! Строит дерево выражения по заданным токенам выражения, записанного в постфиксной (обратной польской) записи
 * \param[in] tokens - токены выражения

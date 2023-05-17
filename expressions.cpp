@@ -6,6 +6,48 @@
 #include <QRegularExpression>
 
 
+ExpressionTreeNode::ExpressionTreeNode(QList<ExpressionTreeNode*> children)
+{
+    this->children = children;
+};
+
+ExpressionTreeNode* ExpressionTreeNode::getChild(int index) {
+    return children.at(index);
+}
+
+int ExpressionTreeNode::getChildrenCount() {
+    return children.length();
+}
+
+ExpressionTreeNode::~ExpressionTreeNode() {
+    for (int i = 0; i < children.length(); i++) {
+        delete children.at(i);
+    }
+}
+
+Operation::Operation(QList<ExpressionTreeNode*> children) : ExpressionTreeNode(children) {
+
+}
+
+
+Value::Value(ValueType type, QString value) : ExpressionTreeNode({}) {
+    this->type = type;
+    this->value = value;
+}
+
+QString Value::getValue() {
+    return value;
+}
+
+ValueType Value::getType() {
+    return type;
+}
+
+virtual QString Value::toTex() {
+    return value;
+}
+
+
 Value* recognizeValueToken(QString token) {
     QRegularExpression numeric("^-?[0-9.]+$");
     QRegularExpression identifier("^[A-Za-z][A-Za-z_0-9]*$");

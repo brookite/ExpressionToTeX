@@ -13,12 +13,12 @@ QStringList getTokensByWhitespace(QString & expression) {
     QString trimmedExpression = expression.trimmed();
     int tokenBegin = 0;
     int tokenLength = 0;
-    for (int i = 0; i < expression.length(); i++) {
-        if (expression.at(i).isSpace()) //символ является белым разделителем
+    for (int i = 0; i < trimmedExpression.length(); i++) {
+        if (trimmedExpression.at(i).isSpace()) //символ является белым разделителем
         {
             //Сохранить полученный токен в результирующий список, если к нему отнесен хотя бы один из просмотренных символов
             if (tokenLength > 0) {
-                tokens.append(expression.mid(tokenBegin, tokenLength));
+                tokens.append(trimmedExpression.mid(tokenBegin, tokenLength));
             }
             // Перейти к рассмотрению следующего токена
             tokenLength = 0;
@@ -31,7 +31,7 @@ QStringList getTokensByWhitespace(QString & expression) {
     }
     // Записать последний токен из строки в результирующий список, если к нему отнесен хотя бы один из просмотренных символов
     if (tokenLength > 0) {
-        tokens.append(expression.mid(tokenBegin, tokenLength));
+        tokens.append(trimmedExpression.mid(tokenBegin, tokenLength));
     }
     return tokens;
 }
