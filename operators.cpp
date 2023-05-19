@@ -1,3 +1,8 @@
+/*!
+ * \file
+ * \brief Файл с реализацией функций, необходимых для работы с поддерживаемыми операциями
+*/
+
 #include <QStringList>
 #include <QRegularExpression>
 #include "operations.cpp"

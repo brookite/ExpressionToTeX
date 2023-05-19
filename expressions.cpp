@@ -1,3 +1,8 @@
+/*!
+ * \file
+ * \brief Файл с реализацией функций и классов для работы с выражениями и деревом выражения
+*/
+
 #include "expressions.h"
 #include "operators.h"
 #include "exceptions.h"

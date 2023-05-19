@@ -1,3 +1,8 @@
+/*!
+ * \file
+ * \brief Файл с реализацией классов операций и учетом особенностей их представления в языке TeX
+*/
+
 #include "expressions.h"
 #include "operators.h"
 

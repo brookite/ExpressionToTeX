@@ -1,3 +1,9 @@
+/*!
+ * \file Файл с точкой входа в программу
+ * \brief Содержит реализации основных функций программы, а также главную функцию main, в которой
+ * производится чтение из входного файла, преобразование выражения и запись в выходной файл или печать ошибки в консоль
+*/
+
 #include "functions.h"
 #include "expressions.h"
 #include "exceptions.h"
@@ -48,7 +54,7 @@ QString postfixExpressionToTeX(QString postfixExpression) {
 
 int main(int argc, char *argv[])
 {
-    runTests();
+    // runTests();
 
     QString inputArgsErr("Неверно указаны входной и выходной файлы. Возможно, один из них был пропущен");
     QString inputFileErr("Неверно указан файл с входными данными. Возможно, файл не существует");
