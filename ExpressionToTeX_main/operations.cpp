@@ -7,6 +7,9 @@
 #include "operators.h"
 
 
+/*!
+ * \brief Представление операции сложения в виде объекта
+ */
 struct PlusOperation : Operation {
 	PlusOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -23,6 +26,10 @@ struct PlusOperation : Operation {
 	}
 };
 
+
+/*!
+ * \brief Представление операции вычитания в виде объекта
+ */
 struct SubOperation : Operation {
 	SubOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -39,6 +46,11 @@ struct SubOperation : Operation {
 	}
 };
 
+
+/*!
+ * \brief Представление операции умножения в виде объекта
+ * \details Операнды, представляющие собой числовое значение и переменные представляются в итоговой формуле без знака умножения
+ */
 struct MulOperation : Operation {
 	MulOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -80,6 +92,10 @@ struct MulOperation : Operation {
 	}
 };
 
+
+/*!
+ * \brief Представление операции деления в виде объекта
+ */
 struct DivOperation : Operation {
 	DivOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -97,6 +113,10 @@ struct DivOperation : Operation {
 
 };
 
+
+/*!
+ * \brief Представление операции "меньше" в виде объекта
+ */
 struct LessOperation : Operation {
 	LessOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -113,6 +133,10 @@ struct LessOperation : Operation {
 	}
 };
 
+
+/*!
+ * \brief Представление операции "больше" в виде объекта
+ */
 struct GreaterOperation : Operation {
 	GreaterOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -129,6 +153,10 @@ struct GreaterOperation : Operation {
 	}
 };
 
+
+/*!
+ * \brief Представление операции "больше или равно" в виде объекта
+ */
 struct GreaterEqualOperation : Operation {
 	GreaterEqualOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -145,6 +173,10 @@ struct GreaterEqualOperation : Operation {
 	}
 };
 
+
+/*!
+ * \brief Представление операции "меньше или равно" в виде объекта
+ */
 struct LessEqualOperation : Operation {
 	LessEqualOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -161,6 +193,10 @@ struct LessEqualOperation : Operation {
 	}
 };
 
+
+/*!
+ * \brief Представление операции "равно" в виде объекта
+ */
 struct EqualOperation : Operation {
 	EqualOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -177,6 +213,10 @@ struct EqualOperation : Operation {
 	}
 };
 
+
+/*!
+ * \brief Представление операции "не равно" в виде объекта
+ */
 struct NotEqualOperation : Operation {
 	NotEqualOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -194,6 +234,10 @@ struct NotEqualOperation : Operation {
 
 };
 
+
+/*!
+ * \brief Представление операции логарифма по заданному основанию в виде объекта
+ */
 struct LogOperation : Operation {
 	LogOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -217,6 +261,10 @@ struct LogOperation : Operation {
 	}
 };
 
+
+/*!
+ * \brief Представление записи в нижний индекс в виде объекта
+ */
 struct SubIndexOperation : Operation {
 	SubIndexOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -233,6 +281,10 @@ struct SubIndexOperation : Operation {
 	}
 };
 
+
+/*!
+ * \brief Представление логической операции "И" в виде объекта
+ */
 struct LogicalAndOperation : Operation {
 	LogicalAndOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -249,6 +301,9 @@ struct LogicalAndOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление логической операции "ИЛИ" в виде объекта
+ */
 struct LogicalOrOperation : Operation {
 	LogicalOrOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -266,6 +321,9 @@ struct LogicalOrOperation : Operation {
 
 };
 
+/*!
+ * \brief Представление логической операции суммы по модулю в виде объекта
+ */
 struct LogicalXorOperation : Operation {
 	LogicalXorOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -282,6 +340,9 @@ struct LogicalXorOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление записи квантора всеобщности в виде объекта
+ */
 struct AllQuantifierOperation : Operation {
 	AllQuantifierOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -298,6 +359,9 @@ struct AllQuantifierOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление записи квантора существования в виде объекта
+ */
 struct ExistQuantifierOperation : Operation {
 	ExistQuantifierOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -314,6 +378,9 @@ struct ExistQuantifierOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление операции взятия остатка в виде объекта
+ */
 struct ModOperation : Operation {
 	ModOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -330,6 +397,9 @@ struct ModOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление операции унарного плюса в виде объекта
+ */
 struct UnaryPlusOperation : Operation {
 	UnaryPlusOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
@@ -353,6 +423,9 @@ struct UnaryPlusOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление операции унарного минуса в виде объекта
+ */
 struct UnaryMinusOperation : Operation {
 	UnaryMinusOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
@@ -376,6 +449,9 @@ struct UnaryMinusOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление логической операции "НЕ" (инверсия) в виде объекта
+ */
 struct LogicalInversionOperation : Operation {
 	LogicalInversionOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
@@ -392,6 +468,9 @@ struct LogicalInversionOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление тригонометрической функции синуса в виде объекта
+ */
 struct SinOperation : Operation {
 	SinOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
@@ -415,6 +494,9 @@ struct SinOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление тригонометрической функции косинуса в виде объекта
+ */
 struct CosOperation : Operation {
 	CosOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
@@ -438,6 +520,9 @@ struct CosOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление тригонометрической функции тангенса в виде объекта
+ */
 struct TanOperation : Operation {
 	TanOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
@@ -461,6 +546,9 @@ struct TanOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление тригонометрической функции контангенса в виде объекта
+ */
 struct CotanOperation : Operation {
 	CotanOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
@@ -484,6 +572,9 @@ struct CotanOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление тригонометрической функции арксинуса в виде объекта
+ */
 struct ArcsinOperation : Operation {
 	ArcsinOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
@@ -507,6 +598,9 @@ struct ArcsinOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление тригонометрической функции арккосинуса в виде объекта
+ */
 struct ArccosOperation : Operation {
 	ArccosOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
@@ -530,6 +624,9 @@ struct ArccosOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление тригонометрической функции арктангенса в виде объекта
+ */
 struct ArctanOperation : Operation {
 	ArctanOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
@@ -553,6 +650,9 @@ struct ArctanOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление тригонометрической функции арккотангенса в виде объекта
+ */
 struct ArccotanOperation : Operation {
 	ArccotanOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
@@ -576,6 +676,9 @@ struct ArccotanOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление операции модуля в виде объекта
+ */
 struct AbsOperation : Operation {
 	AbsOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
@@ -592,6 +695,9 @@ struct AbsOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление операции натурального логарифма в виде объекта
+ */
 struct NaturalLogOperation : Operation {
 	NaturalLogOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
@@ -615,6 +721,9 @@ struct NaturalLogOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление операции десятичного логарифма в виде объекта
+ */
 struct DecimalLogOperation : Operation {
 	DecimalLogOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
@@ -638,6 +747,9 @@ struct DecimalLogOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление операции квадратного корня в виде объекта
+ */
 struct SqrtOperation : Operation {
 	SqrtOperation(ExpressionTreeNode* value) : Operation({ value }) {}
 
@@ -654,6 +766,9 @@ struct SqrtOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление операции корня по заданному основанию в виде объекта
+ */
 struct RootOperation : Operation {
 	RootOperation(ExpressionTreeNode* base, ExpressionTreeNode* value) : Operation({ base, value }) {}
 
@@ -670,7 +785,9 @@ struct RootOperation : Operation {
 	}
 };
 
-
+/*!
+ * \brief Представление операции возведения в степень в виде объекта
+ */
 struct PowOperation : Operation {
 	PowOperation(ExpressionTreeNode* left, ExpressionTreeNode* right) : Operation({ left, right }) {}
 
@@ -694,6 +811,11 @@ struct PowOperation : Operation {
 	}
 };
 
+/*!
+ * \brief Представление операции суммирования в виде объекта
+ * \details Операция суммирования может иметь нижний и верхний пределы суммирования,
+   только нижний предел, или не иметь пределов суммирования
+ */
 struct SumOperation : Operation {
 public:
 	SumOperation(ExpressionTreeNode* startInterval, ExpressionTreeNode* endInterval, ExpressionTreeNode* node)
@@ -756,6 +878,11 @@ public:
 	}
 };
 
+/*!
+ * \brief Представление произведения в виде объекта
+ * \details Операция произведения может иметь нижний и верхний пределы,
+   только нижний предел, или не иметь пределов произведения
+ */
 struct ProdOperation : Operation {
 public:
 	ProdOperation(ExpressionTreeNode* startInterval, ExpressionTreeNode* endInterval, ExpressionTreeNode* node)
