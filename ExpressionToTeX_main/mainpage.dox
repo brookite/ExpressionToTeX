@@ -1,0 +1,308 @@
+/*!
+ * \mainpage Программа для перевода выражения языка C++ в формулу TeX
+ * \author Шашков Дмитрий
+ * \details
+ * Программа позволяет преобразовать выражение на языке C++ в формулу TeX, используя соответствующие символы и конструкции языка TeX, правильно обрабатывая вложенные в операции выражения и правильно расставляя скобки, не допуская неоднозначной интерпретации формулы.
+ * <h2><b> Формат входных данных</b></h3>
+ * На вход программы подается текстовый файл, содержащий одну строку - дерево выражений в виде обратной польской (постфиксной) записи. Все операторы и операнды в выражении разделяются знаком табуляции или знаком пробела. 
+ * Например, выражение "3x + y" будет выглядеть в обратной польской записи следующим образом: "3 x * y +"
+ * <h2><b> Cодержание выходного файла </b></h2>
+ * Выходной файл представляется в виде одного текстового файла, содержащего формулу в формате TeX. В случае ошибки во входных данных, сообщение об ошибке выводится в консоль, выходной файл при этом не создается
+ * <h2><b> Поддерживаемые операции </b></h2>
+ <table>
+	<tr>
+		<th>Название операции</th>
+		<th>Обозначение операции в постфиксной записи</th>
+		<th>Количество операндов в постфиксной записи</th>
+		<th>Пример выражения с операцией в постфиксной записи</th>
+		<th>Пример представления выражения с операцией в формате TeX</th>
+	</tr>
+	<tr>
+		<td>Сложение</td>
+		<td>«+»</td>
+		<td>2</td>
+		<td>4 3 +</td>
+		<td>4 + 3</td>
+	</tr>
+	<tr>
+		<td>Вычитание</td>
+		<td>«-»</td>
+		<td>2</td>
+		<td>5 3 -</td>
+		<td>5 - 3</td>
+	</tr>
+	<tr>
+		<td>Умножение</td>
+		<td>«*»</td>
+		<td>2</td>
+		<td>4 8 *</td>
+		<td>4 \cdot 8</td>
+	</tr>
+	<tr>
+		<td>Деление</td>
+		<td>«/»</td>
+		<td>2</td>
+		<td>11 2 /</td>
+		<td>\frac{11}{2}</td>
+	</tr>
+	<tr>
+		<td>Меньше</td>
+		<td>«<»</td>
+		<td>2</td>
+		<td>x 3 <</td>
+		<td>x < 3</td>
+	</tr>
+	<tr>
+		<td>Больше</td>
+		<td>«>»</td>
+		<td>2</td>
+		<td>y 5 ></td>
+		<td>y > 5</td>
+	</tr>
+	<tr>
+		<td>Меньше или равно</td>
+		<td>«<=»</td>
+		<td>2</td>
+		<td>z y <=</td>
+		<td>z \leq y</td>
+	</tr>
+	<tr>
+		<td>Больше или равно</td>
+		<td>«>=»</td>
+		<td>2</td>
+		<td>z x >=</td>
+		<td>z \geq x</td>
+	</tr>
+	<tr>
+		<td>Равно</td>
+		<td>«=» или «==»</td>
+		<td>2</td>
+		<td>x y =</td>
+		<td>x = y</td>
+	</tr>
+	<tr>
+		<td>Не равно</td>
+		<td>«!=»</td>
+		<td>2</td>
+		<td>x z !=</td>
+		<td>x \neq z</td>
+	</tr>
+	<tr>
+		<td>Возведение в степень</td>
+		<td>«^»</td>
+		<td>2</td>
+		<td>2 x ^</td>
+		<td>{x}^{2}</td>
+	</tr>
+	<tr>
+		<td>Логарифм по основанию</td>
+		<td>«LOG»</td>
+		<td>2</td>
+		<td>2 x LOG</td>
+		<td>\log_{2}{x}</td>
+	</tr>
+	<tr>
+		<td>Запись в нижний индекс</td>
+		<td>«SUB»</td>
+		<td>2</td>
+		<td>x i SUB</td>
+		<td>{x}_{i}</td>
+	</tr>
+	<tr>
+		<td>Конъюнкция</td>
+		<td>«&»</td>
+		<td>2</td>
+		<td>x y &</td>
+		<td>x \wedge y</td>
+	</tr>
+	<tr>
+		<td>Дизъюнкция</td>
+		<td>«|»</td>
+		<td>2</td>
+		<td>x z |</td>
+		<td>x \vee z</td>
+	</tr>
+	<tr>
+		<td>Сумма по модулю</td>
+		<td>«XOR»</td>
+		<td>2</td>
+		<td>x y XOR</td>
+		<td>x \oplus y</td>
+	</tr>
+	<tr>
+		<td>Квантор всеобщности</td>
+		<td>«FORALL»</td>
+		<td>2</td>
+		<td>x x 3 < FORALL</td>
+		<td>\forall{x}{(x < 3)}</td>
+	</tr>
+	<tr>
+		<td>Квантор существования</td>
+		<td>«EXISTS»</td>
+		<td>2</td>
+		<td>y y 5 > EXISTS</td>
+		<td>\exists{y}{(y > 5)}</td>
+	</tr>
+	<tr>
+		<td>Остаток от деления</td>
+		<td>«%»</td>
+		<td>2</td>
+		<td>9 5 %</td>
+		<td>9 \bmod 5</td>
+	</tr>
+	<tr>
+		<td>Унарный плюс</td>
+		<td>«POS»</td>
+		<td>1</td>
+		<td>x POS</td>
+		<td>+x</td>
+	</tr>
+	<tr>
+		<td>Унарный минус</td>
+		<td>«NEG»</td>
+		<td>1</td>
+		<td>x NEG</td>
+		<td>-x</td>
+	</tr>
+	<tr>
+		<td>Отрицание</td>
+		<td>«!» или «~»</td>
+		<td>1</td>
+		<td>x ~</td>
+		<td>\overline{x}</td>
+	</tr>
+	<tr>
+		<td>Синус</td>
+		<td>«SIN»</td>
+		<td>1</td>
+		<td>y SIN</td>
+		<td>\sin{x}</td>
+	</tr>
+	<tr>
+		<td>Косинус</td>
+		<td>«COS»</td>
+		<td>1</td>
+		<td>x COS</td>
+		<td>\cos{x}</td>
+	</tr>
+	<tr>
+		<td>Тангенс</td>
+		<td>«TG»</td>
+		<td>1</td>
+		<td>x TG</td>
+		<td>\tan{x}</td>
+	</tr>
+	<tr>
+		<td>Котангенс</td>
+		<td>«CTG»</td>
+		<td>1</td>
+		<td>x CTG</td>
+		<td>\cot{x}</td>
+	</tr>
+	<tr>
+		<td>Арксинус</td>
+		<td>«ARCSIN»</td>
+		<td>1</td>
+		<td>x ARCSIN</td>
+		<td>\arcsin{x}</td>
+	</tr>
+	<tr>
+		<td>Арккосинус</td>
+		<td>«ARCCOS»</td>
+		<td>1</td>
+		<td>y ARCCOS</td>
+		<td>\arccos{x}</td>
+	</tr>
+	<tr>
+		<td>Арктангенс</td>
+		<td>«ARCTG»</td>
+		<td>1</td>
+		<td>x ARCTG</td>
+		<td>\arctan{x}</td>
+	</tr>
+	<tr>
+		<td>Арккотангенс</td>
+		<td>«ARCCTG»</td>
+		<td>1</td>
+		<td>y ARCCTG</td>
+		<td>\arccot{x}</td>
+	</tr>
+	<tr>
+		<td>Абсолютное значение числа</td>
+		<td>«ABS»</td>
+		<td>1</td>
+		<td>x 3 + ABS</td>
+		<td>|x + 3|</td>
+	</tr>
+	<tr>
+		<td>Натуральный логарифм</td>
+		<td>«LN»</td>
+		<td>1</td>
+		<td>x LN</td>
+		<td>\ln{x}</td>
+	</tr>
+	<tr>
+		<td>Десятичный логарифм</td>
+		<td>«LG»</td>
+		<td>1</td>
+		<td>y LG</td>
+		<td>\lg{x}</td>
+	</tr>
+	<tr>
+		<td>Квадратный корень</td>
+		<td>«SQRT»</td>
+		<td>1</td>
+		<td>x 2 * SQRT</td>
+		<td>\sqrt{x * 2}</td>
+	</tr>
+	<tr>
+		<td>Корень заданной степени</td>
+		<td>«ROOT»</td>
+		<td>2</td>
+		<td>3 x 2 ^ ROOT</td>
+		<td>\sqrt[{3}]{x^2}</td>
+	</tr>
+	<tr>
+		<td>Сумма с верхним и нижним пределом</td>
+		<td>«SUM»</td>
+		<td>3</td>
+		<td>i 1 = n x i SUB PROD</td>
+		<td>\sum_{i=1}^{n}{x_{i}}</td>
+	</tr>
+	<tr>
+		<td>Произведение с верхним и нижним пределом</td>
+		<td>«PROD»</td>
+		<td>3</td>
+		<td>i 1 = n y i SUB PROD</td>
+		<td>\prod_{i=1}^{n}{y_{i}}</td>
+	</tr>
+	<tr>
+		<td>Сумма с нижним пределом</td>
+		<td>«SUM2»</td>
+		<td>2</td>
+		<td>k 1 = y k SUB SUM2</td>
+		<td>\sum_{k=1}{y_{k}}</td>
+	</tr>
+</table>
+ * <h2><b> Примеры работы программы </b></h2>
+ <center>
+ <table>
+ <tr>
+ <th>Выражение в обратной польской записи</th>
+ <th>Формула TeX</th>
+ </tr>
+ <tr>
+ <td><tt>a 3 x * y + 2 ^ * b +</tt></td>
+ <td><center><img src="example1.png"></center></td>
+ </tr>
+ <tr>
+ <td><tt>i 0 = n x i SUB y i SUB * e / SUM z + a 2 ^ -</tt></td>
+ <td><center><img src="example2.png"></center></td>
+ </tr>
+ <tr>
+ <td><tt>i 1 = n j 1 = m 3 y j SUB * x i SUB + SUM SUM 3 y ROOT +</tt></td>
+ <td><center><img src="example3.png"></center></td>
+ </tr>
+ </table>
+ </center>
+*/
