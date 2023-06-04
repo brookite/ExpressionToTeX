@@ -159,19 +159,19 @@ Operation* getOperation(QString token, QList<ExpressionTreeNode*> operands) {
 
 
 bool isOperationToken(QString token, int * operandsCount) {
-    const QStringList binaryOperators = {
+    static const QStringList binaryOperators = {
         "+", "-", "*", "/", "<", ">", "<=", ">=", "=", "==", "%",
         "!=", "^", "LOG", "SUB", "&", "|", "XOR", "FORALL", "EXISTS",
         "ROOT", "SUM2", "PROD2"
     };
 
-    const QStringList unaryOperators = {
+    static const QStringList unaryOperators = {
         "POS", "NEG", "!", "~", "SIN", "COS", "TG",
         "CTG", "ARCSIN", "ARCCOS", "ARCTG", "ARCCTG",
         "ABS", "LN", "LG", "SQRT", "SUM1", "PROD1"
     };
 
-    const QStringList ternaryOperators = {
+    static const QStringList ternaryOperators = {
         "SUM", "PROD"
     };
 
