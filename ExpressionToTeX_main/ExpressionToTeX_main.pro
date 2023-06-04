@@ -26,3 +26,5 @@ HEADERS += \
     expressions.h \
     functions.h \
     operators.h
+
+QMAKE_LFLAGS += -Wl,--stack,8388608
