@@ -54,8 +54,8 @@ QString Value::toTex() {
 
 
 Value* recognizeValueToken(QString token) {
-    QRegularExpression numeric("^-?[0-9.]+$");
-    QRegularExpression identifier("^[A-Za-z][A-Za-z_0-9]*$");
+    static QRegularExpression numeric("^-?[0-9.]+$");
+    static QRegularExpression identifier("^[A-Za-z][A-Za-z_0-9]*$");
 
     Value* result = nullptr;
     if (numeric.match(token).hasMatch())
