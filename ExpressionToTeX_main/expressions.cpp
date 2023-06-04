@@ -82,7 +82,7 @@ ExpressionTreeNode* buildExpressionTree(QStringList& tokens)
 
     // Считать стек выражения пустым
     QStack<ExpressionTreeNode*> exprStack;
-    for (QString token : tokens) // для каждого токена
+    for (QString & token : tokens) // для каждого токена
     {
         int operandCount;
         if (isOperationToken(token, &operandCount))
