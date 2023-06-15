@@ -211,8 +211,8 @@ QString fillOperationPatternWithParentheses(QString pattern, Operation* currentO
         // Заключить операнд в круглые скобки, если он представляет составное выражение (является операндом)
         // или текущая операция является корнем или модулем
         SqrtOperation* sqrtOp = dynamic_cast<SqrtOperation*>(currentOp);
-        SqrtOperation* absOp = dynamic_cast<SqrtOperation*>(currentOp);
-        SqrtOperation* rootOp = dynamic_cast<SqrtOperation*>(currentOp);
+        AbsOperation* absOp = dynamic_cast<AbsOperation*>(currentOp);
+        RootOperation* rootOp = dynamic_cast<RootOperation*>(currentOp);
 
         bool isParenthesesAllowed = (sqrtOp == nullptr) && (absOp == nullptr) && (rootOp == nullptr);
 
@@ -228,7 +228,7 @@ QString fillOperationPatternWithParentheses(QString pattern, Operation* currentO
         QString leftExpression = currentOp->getChild(0)->toTex();
         QString rightExpression = currentOp->getChild(1)->toTex();
 
-        Operation * leftOp = dynamic_cast<Operation*>(currentOp->getChild(0));
+        leftOp = dynamic_cast<Operation*>(currentOp->getChild(0));
         Operation * rightOp = dynamic_cast<Operation*>(currentOp->getChild(1));
 
         bool isRightOperandParenthesesRequired = (dynamic_cast<SubOperation*>(currentOp) != nullptr) &&
